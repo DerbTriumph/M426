@@ -1,20 +1,20 @@
 class Player extends Shape {
   
-  // Muster Beispiel
-  
-     Player(int distanz){
+    Player(int distanz){
        breite = 20;
        hoehe = 20;
+       
        if (distanz >= 0) xPos = distanz;
        else xPos = p.width + distanz - breite;
        yPos = p.height/2-hoehe/2;
+       
        ySpeed = 5;
-   }
+       xSpeed = 5;
+    }
   
-  void show(){
+    void show(){
         p.rect(xPos,yPos,breite,hoehe);
       }
-      
       
      void up(){
       if (yPos > ySpeed) yPos -= ySpeed;
@@ -22,6 +22,14 @@ class Player extends Shape {
      
       void down(){
        if (yPos < p.height - hoehe - ySpeed) yPos += ySpeed;
+     } 
+     
+      void left(){
+      if (xPos > xSpeed) xPos -= xSpeed;
+     } 
+     
+     void right(){
+       if (xPos < p.width - breite - xSpeed) xPos += xSpeed;
      } 
      
     int getLeft(){
@@ -38,6 +46,5 @@ class Player extends Shape {
     
     int getBootom(){
       return yPos + hoehe;
-    }
-    
+    } 
 }

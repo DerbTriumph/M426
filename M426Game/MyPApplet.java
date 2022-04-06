@@ -1,5 +1,5 @@
 import processing.core.PApplet;
 
-abstract class MyPApplet {
+  abstract class MyPApplet {
   static public PApplet p;
 }
