@@ -1,7 +1,7 @@
 Gamefield gamefield;
 
 void setup(){
-  size(800,600);
+  size(1600,900);
   MyPApplet.p = this;
   gamefield = new Gamefield();
 }
@@ -9,7 +9,17 @@ void setup(){
 
 void draw(){
   background(80);
-  gamefield.drawfield();
+  
+  switch(gamefield.state){
+    case "start":
+      gamefield.showStartScreen();
+      
+    case "play":
+      gamefield.drawfield();
+  }
+  
+  
+ 
 }
 
 
