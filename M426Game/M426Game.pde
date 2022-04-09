@@ -1,6 +1,7 @@
 Gamefield gamefield;
 StartScreen start;
 PauseScreen pause;
+GameoverScreen gameover;
 
 void setup(){
   size(1600,900);
@@ -8,6 +9,7 @@ void setup(){
   gamefield = new Gamefield();
   start = new StartScreen();
   pause = new PauseScreen();
+  gameover = new GameoverScreen();
 }
 
 
@@ -28,6 +30,10 @@ void draw(){
      case "pause":
       gamefield.state = pause.showPauseScreen();
       break;
+      
+     case "gameover":
+       gamefield.state = gameover.showGameoverScreen();
+       break;
   }
   
   
