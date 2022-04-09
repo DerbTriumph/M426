@@ -1,23 +1,22 @@
 import java.util.*;
+import java.awt.Rectangle;
+
 class Gamefield extends MyPApplet {
   
   final Player player = new Player(30);
   Score score = new Score();
   ColisionDetection colision = new ColisionDetection();
   String state = "start";
-  int[][] Gamefield = new int[16][9];
-  int[] ReiheY = new int[9];
+ 
   
-  void drawfield(){
+  void drawfield(int[][] gamefield){
       p.fill(10,255,32);
       player.show();
-      createInitalField(ReiheY, Gamefield);
       String px = String.valueOf(player.xPos);
-      p.println(px);
+      //p.println(px);
       state = colision.playerOutOfBounds(player.xPos);
+      drawFieldArray(gamefield);
   }
-  
-  
   
   void action(char myKey){
     switch(myKey){
@@ -75,8 +74,22 @@ class Gamefield extends MyPApplet {
     
     for(int e = 0; e < 16; e++) {
          for(int r = 0; r < 9; r++) {
-           System.out.println(gamefield[e][r]);
+           System.out.print(gamefield[e][r]);
          }
+         System.out.println("");
+    }
+  }
+  
+  void drawFieldArray(int[][] gamefield){
+    int posY = 0;
+     for(int e = 0; e < 9; e++) {
+         for(int r = 0; r < 16; r++) {
+           if(gamefield[r][e] == 1){
+             p.fill(35);
+             p.rect(r*100+2,posY+2,96,96,10);
+           }
+         }
+         posY = posY + 100;
     }
   }
 }
