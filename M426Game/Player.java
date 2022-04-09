@@ -25,7 +25,7 @@ class Player extends Shape {
      } 
      
       void left(){
-      if (xPos > xSpeed) xPos -= xSpeed;
+      xPos -= xSpeed;
      } 
      
      void right(){
