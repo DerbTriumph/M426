@@ -1,8 +1,8 @@
 class Player extends Shape {
   
     Player(int distanz){
-       breite = 20;
-       hoehe = 20;
+       breite = 50;
+       hoehe = 50;
        
        if (distanz >= 0) xPos = distanz;
        else xPos = p.width + distanz - breite;
@@ -13,7 +13,7 @@ class Player extends Shape {
     }
   
     void show(){
-        p.rect(xPos,yPos,breite,hoehe);
+        p.rect(xPos,yPos,breite,hoehe,10);
       }
       
      void up(){
