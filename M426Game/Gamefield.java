@@ -22,27 +22,53 @@ class Gamefield extends MyPApplet {
     switch(myKey){
       case 'w':
       case 'W':
-        player.up();
+        player.yPos -= 5;
       break;
       
       case 's':
       case 'S':
-        player.down();
+        player.yPos += 5;
       break;
      
       case 'd':
       case 'D':
-        player.right();
+        player.xPos += 5;
       break;
      
       case 'a':
       case 'A':
-        player.left();
+        player.xPos -= 5;
       break;
      
       case 'p':
       case 'P':
         state = "pause";
+      break;
+     
+      default: break;
+    }
+  }
+  
+  void actionStopped(char myKey){
+    switch(myKey){
+      case 'w':
+      case 'W':
+        p.key = 'n';
+      break;
+      
+      case 's':
+      case 'S':
+        p.key = 'n';
+      break;
+     
+      case 'd':
+      case 'D':
+        p.key = 'n';
+      break;
+     
+      case 'a':
+      case 'A':
+        p.key = 'n';
       break;
      
       default: break;

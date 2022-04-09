@@ -20,6 +20,7 @@ void setup(){
 void draw(){
   background(80);
   
+  gamefield.action(key);
   
   switch(gamefield.state){
     case "start":
@@ -40,6 +41,6 @@ void draw(){
   }
 }
 
-void keyPressed(){
-  gamefield.action(key);
+void keyReleased(){
+  gamefield.actionStopped(key);
 }
