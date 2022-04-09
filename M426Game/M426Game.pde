@@ -20,7 +20,6 @@ void setup(){
 void draw(){
   background(80);
   
-  
   switch(gamefield.state){
     case "start":
       gamefield.state = start.showStartScreen();
@@ -28,6 +27,7 @@ void draw(){
       
     case "play":
       gamefield.drawfield(Gamefield);
+      gamefield.moveField(Gamefield);
       break;
       
      case "pause":
