@@ -2,21 +2,24 @@ Gamefield gamefield;
 StartScreen start;
 PauseScreen pause;
 GameoverScreen gameover;
-
+int[][] Gamefield = new int[16][9];
+int[] ReiheY = new int[9];
+  
 void setup(){
   size(1600,900);
+  frameRate(60);
   MyPApplet.p = this;
   gamefield = new Gamefield();
   start = new StartScreen();
   pause = new PauseScreen();
   gameover = new GameoverScreen();
+  gamefield.createInitalField(ReiheY, Gamefield);
 }
 
 
 void draw(){
   background(80);
   
-  println(gamefield.state);
   
   switch(gamefield.state){
     case "start":
@@ -24,7 +27,7 @@ void draw(){
       break;
       
     case "play":
-      gamefield.drawfield();
+      gamefield.drawfield(Gamefield);
       break;
       
      case "pause":
@@ -35,12 +38,7 @@ void draw(){
        gamefield.state = gameover.showGameoverScreen();
        break;
   }
-  
-  
- 
 }
-
-
 
 void keyPressed(){
   gamefield.action(key);
