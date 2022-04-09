@@ -3,6 +3,7 @@ class Gamefield extends MyPApplet {
   
   final Player player = new Player(30);
   Score score = new Score();
+  ColisionDetection colision = new ColisionDetection();
   String state = "start";
   int[][] Gamefield = new int[16][9];
   int[] ReiheY = new int[9];
@@ -11,22 +12,12 @@ class Gamefield extends MyPApplet {
       p.fill(10,255,32);
       player.show();
       createInitalField(ReiheY, Gamefield);
+      String px = String.valueOf(player.xPos);
+      p.println(px);
+      state = colision.playerOutOfBounds(player.xPos);
   }
   
-  void showStartScreen() {
-    int bWidth = 200;
-    int bHeight = 100;
-    p.background(100,150,0);
-    p.fill(255);
-    p.noStroke();
-    p.rect(800-bWidth/2, 450-bHeight/2, bWidth, bHeight, 20);
-    p.fill(100,150,0);
-    if (p.mousePressed && p.mouseX > 800-bWidth/2 && p.mouseX < 800+bWidth/2) {
-      if (p.mousePressed && p.mouseY > 450-bHeight/2 && p.mouseY < 450+bHeight/2){
-          state = "play";    
-      }
-    }
-  }
+  
   
   void action(char myKey){
     switch(myKey){
