@@ -7,7 +7,8 @@ class Gamefield extends MyPApplet {
   Score score = new Score();
   ColisionDetection colision = new ColisionDetection();
   String state = "start";
-  int interval = 90;
+  int interval = 60;
+  boolean leerReihe = true;
   
   void drawfield(int[][] gamefield){
       p.fill(10,255,32);
@@ -16,20 +17,16 @@ class Gamefield extends MyPApplet {
       //p.println(px);
       state = colision.playerOutOfBounds(player.xPos);
       
-      
-      
       if (interval <= 0){
-          
-          gamefield = moveField(gamefield);
-          interval = 90;
+          System.out.println("Spielfeld schieben");
+          moveField(gamefield);
+          interval = 60;
       }else{
+        System.out.println("Spielfeld schieben");
           drawFieldArray(gamefield);
       }
       interval--;
-      //System.out.println("Interval Zähler: " + interval);
-      
-      
-      
+      System.out.println("Interval Zähler: " + interval);
   }
   
   void action(char myKey){
@@ -89,29 +86,14 @@ class Gamefield extends MyPApplet {
     }
   }
   
-  void createInitalField(int[] reiheY, int[][] gamefield){
+  void createInitalField(int[][] gamefield){
     for(int u=0; u<3; u+=2){
-        Random rand = new Random();
-        int upperbound = 2; // befüllt(1) oder nicht befüllt(0)
-        int upperboundPosFree = 10; // Plätze in einer Reihe Y
-        int posFree1 = rand.nextInt(upperboundPosFree);
-        int posFree2 = rand.nextInt(upperboundPosFree);
-        
-        for(int i = 0; i < 7; i++){
-          if (i != posFree1 || i != posFree2){
-            int wert = rand.nextInt(upperbound); 
-              reiheY[i] = wert;
-          }else{
-              reiheY[i] = 0;
-          }
-        }
-        
         // ReiheY in das Spielfeld übertragen
         for(int i = 0; i<9; i++){
-           gamefield[13+u][i] = reiheY[i];
+           gamefield[13+u][i] = generateYLine()[i];
         }
      }
-    
+    // Debug Spielfeld in Konsole ausgeben
     for(int e = 0; e < 16; e++) {
          for(int r = 0; r < 9; r++) {
            System.out.print(gamefield[e][r]);
@@ -119,6 +101,7 @@ class Gamefield extends MyPApplet {
          System.out.println("");
     }
       System.out.println("-------X-------");
+      
   }
   
   void drawFieldArray(int[][] gamefield){
@@ -134,37 +117,57 @@ class Gamefield extends MyPApplet {
     }
   }
   
-  int[][] moveField(int[][] gamefield){
-    int[][] GamefieldNew = new int[16][9];
-  
+  void moveField(int[][] gamefield){
     for(int i=1; i<16; i++){
-      
       for(int p=0; p<9; p++){
-          GamefieldNew[i-1][p] = gamefield[i][p];
+          gamefield[i-1][p] = gamefield[i][p];
       }
     }
     
-    // Neue ReiheY generieren und hinzufügen
-    GamefieldNew[15][0] = 0;
-    GamefieldNew[15][1] = 0;
-    GamefieldNew[15][2] = 0;
-    GamefieldNew[15][3] = 0;
-    GamefieldNew[15][4] = 0;
-    GamefieldNew[15][5] = 0;
-    GamefieldNew[15][6] = 0;
-    GamefieldNew[15][7] = 0;
-    GamefieldNew[15][8] = 0;
-    
+    // Nur bei jedem zweiten Aufruf Hindernisse einfügen
+    if (leerReihe){
+      // leere ReiheY in das Spielfeld übertragen
+        for(int i = 0; i<9; i++){
+           gamefield[15][i] = 0;
+        }
+        leerReihe = false;
+    }else{
+        // ReiheY in das Spielfeld übertragen
+        for(int i = 0; i<9; i++){
+           gamefield[15][i] = generateYLine()[i];
+        }
+        leerReihe = true;
+    }
+     
+    // Debug Neues Array schreiben in Konsole
      for(int e = 0; e < 16; e++) {
          for(int r = 0; r < 9; r++) {
-           System.out.print(GamefieldNew[e][r]);
+           System.out.print(gamefield[e][r]);
          }
          System.out.println("");
     }
     System.out.println("---------------------------");
-    return GamefieldNew;
   }
   
   
   
+  
+  int[] generateYLine(){
+    // Neue Y Reihe generieren
+    int[] NewReiheY = new int[9];
+    Random rand = new Random();
+    int upperbound = 2; // befüllt(1) oder nicht befüllt(0)
+    int upperboundPosFree = 10; // Plätze in einer Reihe Y
+    int posFree1 = rand.nextInt(upperboundPosFree);
+    int posFree2 = rand.nextInt(upperboundPosFree);
+        for(int i = 0; i < 9; i++){
+          if (i != posFree1 || i != posFree2){
+            int wert = rand.nextInt(upperbound); 
+              NewReiheY[i] = wert;
+          }else{
+              NewReiheY[i] = 0;
+          }
+        }
+  return NewReiheY;
+  }
 }
