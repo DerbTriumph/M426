@@ -2,7 +2,7 @@ Gamefield gamefield;
 StartScreen start;
 PauseScreen pause;
 GameoverScreen gameover;
-int[][] Gamefield = new int[16][9];
+
   
 void setup(){
   size(1600,900);
@@ -12,7 +12,7 @@ void setup(){
   start = new StartScreen();
   pause = new PauseScreen();
   gameover = new GameoverScreen();
-  gamefield.createInitalField(Gamefield);
+  gamefield.createInitalField();
 }
 
 
@@ -29,7 +29,7 @@ void draw(){
       break;
       
     case "play":
-      gamefield.drawfield(Gamefield);
+      gamefield.drawfield();
       break;
       
      case "pause":
