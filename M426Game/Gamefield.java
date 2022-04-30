@@ -3,23 +3,42 @@ import java.awt.Rectangle;
 
 class Gamefield extends MyPApplet {
   
-  final Player player = new Player(30);
+  Player player;
   Score score = new Score();
-  ColisionDetection colision = new ColisionDetection();
+  ColisionDetection colision;
   String state = "start";
   int interval = 60;
   boolean leerReihe = true;
+  int[][] gamefield;
   
-  void drawfield(int[][] gamefield){
+  public Gamefield() {
+    this.player = new Player(30);
+    this.score = new Score();
+    this.gamefield = new int[16][9];
+    this.colision = new ColisionDetection(this.gamefield);
+  }
+  
+  void drawfield(){
       p.fill(10,255,32);
+      //player.pushPlayer(colision.isPlayerPushed(player.xPos,player.yPos, gamefield));
       player.show();
-      String px = String.valueOf(player.xPos);
-      //p.println(px);
+
       state = colision.playerOutOfBounds(player.xPos);
+      
+      boolean hasToMove = false;
+      if (interval == 1) {
+        hasToMove = colision.isPlayerPushed(player.xPos, player.yPos);
+      }
+ 
       
       if (interval <= 0){
           System.out.println("Spielfeld schieben");
-          moveField(gamefield);
+          if (hasToMove) {
+            player.pushPlayer();
+          }
+          
+          //moveField(gamefield);
+  
           interval = 60;
       }else{
         System.out.println("Spielfeld schieben");
@@ -43,7 +62,10 @@ class Gamefield extends MyPApplet {
      
       case 'd':
       case 'D':
-        player.xPos += 5;
+        if (colision.rightAllowed(player.xPos, player.yPos)){
+          player.xPos += 5;
+        }
+        
       break;
      
       case 'a':
@@ -86,7 +108,7 @@ class Gamefield extends MyPApplet {
     }
   }
   
-  void createInitalField(int[][] gamefield){
+  void createInitalField(){
     for(int u=0; u<3; u+=2){
         // ReiheY in das Spielfeld übertragen
         for(int i = 0; i<9; i++){
