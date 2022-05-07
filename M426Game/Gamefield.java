@@ -36,9 +36,8 @@ class Gamefield extends MyPApplet {
           if (hasToMove) {
             player.pushPlayer();
           }
-          
-          //moveField(gamefield);
-  
+          score.addPunkt(player);
+          moveField(gamefield);
           interval = 60;
       }else{
         System.out.println("Spielfeld schieben");

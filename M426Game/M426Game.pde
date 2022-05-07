@@ -2,7 +2,7 @@ Gamefield gamefield;
 StartScreen start;
 PauseScreen pause;
 GameoverScreen gameover;
-
+Score score;
   
 void setup(){
   size(1600,900);
@@ -13,6 +13,7 @@ void setup(){
   pause = new PauseScreen();
   gameover = new GameoverScreen();
   gamefield.createInitalField();
+  score = new Score();
 }
 
 
@@ -37,7 +38,9 @@ void draw(){
       break;
       
      case "gameover":
+       score.saveScore();
        gamefield.state = gameover.showGameoverScreen();
+       
        break;
   }
 }
