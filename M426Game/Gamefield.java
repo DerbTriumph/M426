@@ -25,27 +25,29 @@ class Gamefield extends MyPApplet {
 
       state = colision.playerOutOfBounds(player.xPos);
       
-      boolean hasToMove = false;
-      if (interval == 1) {
-        hasToMove = colision.isPlayerPushed(player.xPos, player.yPos);
-      }
+      //boolean hasToMove = false;
+      //if (interval == 1) {
+      //  //hasToMove = colision.isPlayerPushed(player.xPos, player.yPos);
+      //}
  
-      
+  
+       
       if (interval <= 0){
-          System.out.println("Spielfeld schieben");
-          if (hasToMove) {
-            player.pushPlayer();
+          //System.out.println("Spielfeld schieben");
+     
+          moveField(gamefield);
+          int newPosition = colision.isPlayerOnBlock(player.xPos, player.yPos);
+          if (newPosition > 0) {
+            player.xPos = newPosition;
           }
-          
-          //moveField(gamefield);
+
   
           interval = 60;
       }else{
-        System.out.println("Spielfeld schieben");
           drawFieldArray(gamefield);
       }
       interval--;
-      System.out.println("Interval Zähler: " + interval);
+      //System.out.println("Interval Zähler: " + interval);
   }
   
   void action(char myKey){
@@ -64,13 +66,14 @@ class Gamefield extends MyPApplet {
       case 'D':
         if (colision.rightAllowed(player.xPos, player.yPos)){
           player.xPos += 5;
-        }
-        
+        }     
       break;
      
       case 'a':
       case 'A':
-        player.xPos -= 5;
+        if (colision.leftAllowed(player.xPos, player.yPos)){
+          player.xPos -= 5;
+        }
       break;
      
       case 'p':
@@ -162,13 +165,13 @@ class Gamefield extends MyPApplet {
     }
      
     // Debug Neues Array schreiben in Konsole
-     for(int e = 0; e < 16; e++) {
-         for(int r = 0; r < 9; r++) {
-           System.out.print(gamefield[e][r]);
-         }
-         System.out.println("");
-    }
-    System.out.println("---------------------------");
+  //   for(int e = 0; e < 16; e++) {
+  //       for(int r = 0; r < 9; r++) {
+  //         System.out.print(gamefield[e][r]);
+  //       }
+  //       System.out.println("");
+  //  }
+  //  System.out.println("---------------------------");
   }
   
   
